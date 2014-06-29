@@ -90,7 +90,7 @@ app.fetch = function() {
 app._sanitizeMessage = function(message) {
   message.username = this._sanitizeString(message.username);
   message.roomname = this._sanitizeString(message.roomname);
-  message.text = this._sanitizeString(message.text);
+  message.message = this._sanitizeString(message.message);
 };
 
 app._sanitizeString = function(s) {
@@ -114,7 +114,7 @@ app.addMessage = function(message) {
   //add message to html
   var $chats = $('#chats');
   $chats.append(message);
-  var t = _.template('<div class="chats"><span><%= message.username %>: </span><span><%= message.text %></span></div>');
+  var t = _.template('<div class="chats"><span><%= message.username %>: </span><span><%= message.message %></span></div>');
   message['$el'] = $(t({message: message}));
   $chats.prepend(message['$el']);
   if (app.currentRoomname === undefined || message.roomname === app.currentRoomname) {

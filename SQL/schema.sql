@@ -17,15 +17,15 @@ CREATE TABLE rooms (
 CREATE TABLE messages (
   message TEXT,
   createdAt TIMESTAMP(6),
-  users_id INT NOT NULL,
-  rooms_id INT NOT NULL,
+  username INT NOT NULL,
+  roomname INT NOT NULL,
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  INDEX users_ind (users_id),
-  FOREIGN KEY (users_id)
+  INDEX users_ind (username),
+  FOREIGN KEY (username)
         REFERENCES users(id)
         ON DELETE CASCADE,
-  INDEX rooms_ind (rooms_id),
-  FOREIGN KEY (rooms_id)
+  INDEX rooms_ind (roomname),
+  FOREIGN KEY (roomname)
         REFERENCES rooms(id)
         ON DELETE CASCADE
 );

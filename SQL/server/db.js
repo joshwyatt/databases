@@ -9,10 +9,10 @@ var Chat = function(roomname, username, text) {
 };
 
 var Chats = function(chatsArr) {
-  this.data = [];
+  this.results = [];
   this.addChatsToData = function() {
     for(var i = 0; i < chatsArr.length; i++) {
-      this.data.push(chatsArr[i]);
+      this.results.push(chatsArr[i]);
     }
   };
 };
