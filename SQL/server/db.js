@@ -2,6 +2,26 @@ var mysql = require('mysql');
 
 var db = {};
 
+var Chat = function(roomname, username, text) {
+  this.roomname = roomname;
+  this.username = username;
+  this.text = text;
+};
+
+var Chats = function(chatsArr) {
+  this.data = [];
+  this.addChatsToData = function() {
+    for(var i = 0; i < chatsArr.length; i++) {
+      this.data.push(chatsArr[i]);
+    }
+  };
+};
+
+// var parseMessages = function(messages) {
+
+//   for(var i)
+// };
+
 db.createSQLConnection = function() {
   var connection = mysql.createConnection({
     database : 'chat',
@@ -17,14 +37,12 @@ db.selectAllChats = function() {
   connection.connect();
   // console.log("Got here");
 
-  var queryString = "select * from rooms";
+  var queryString = "select * from messages";
 
-  connection.query(queryString, function(err, rows) {
+  connection.query(queryString, function(err, messages) {
     if(err) { throw err; }
-    console.log("ROWS LENGTH: ", rows.length);
-    for(var i = 0; i < rows.length; i++) {
-      console.log(rows[i]);
-    }
+    console.log("ROWS LENGTH: ", messages.length);
+    return messages;
   });
   // console.log("Got here...?");
 };
@@ -42,6 +60,9 @@ db.insertRoom = function() {
   });
 };
 
+// db.insertChats = function() {
+
+// };
 
 
 

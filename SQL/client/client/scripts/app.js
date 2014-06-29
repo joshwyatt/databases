@@ -72,7 +72,7 @@ app._parseMessages = function(data) {
 
 app.fetch = function() {
   $.ajax({
-    url: this.server,
+    url: this.server + "/classes",
     type: 'GET',
     contentType: 'application/json',
     dataType: 'JSON',

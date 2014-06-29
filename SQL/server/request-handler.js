@@ -1,12 +1,6 @@
-/* You should implement your request handler function in this file.
- * And hey! This is already getting passed to http.createServer()
- * in basic-server.js. But it won't work as is.
- * You'll have to figure out a way to export this function from
- * this file and include it in basic-server.js so that it actually works.
- * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
-
 var db = require("./db.js");
 var url = require("url");
+var utils = require("./server-utils.js");
 
 exports.handleRequest = function(request, response) {
 
@@ -14,9 +8,7 @@ exports.handleRequest = function(request, response) {
 
   var statusCode = 200;
 
-  /* Without this line, this server wouldn't work. See the note
-   * below about CORS. */
-  var headers = defaultCorsHeaders;
+  var headers = utils.headers;
   headers["Content-Type"] = "application/json";
 
   if( request.method === "OPTIONS" ){
@@ -25,8 +17,9 @@ exports.handleRequest = function(request, response) {
   }else if( request.method === "GET" ){
     console.log("GETTING");
     response.writeHead(statusCode, headers);
-    db.selectAllChats();
-    // response.write(JSON.stringify(chats));
+    var chats = db.selectAllChats();
+    console.log('r-h.js, chats -----------------------> ', chats);
+    response.write(JSON.stringify(chats));
     response.end();
   }else if( request.method === "POST" ){
     console.log("POSTING");
@@ -36,17 +29,4 @@ exports.handleRequest = function(request, response) {
   }
 
   response.end(JSON.stringify({}));
-};
-
-/* These headers will allow Cross-Origin Resource Sharing (CORS).
- * This CRUCIAL code allows this server to talk to websites that
- * are on different domains. (Your chat client is running from a url
- * like file://your/chat/client/index.html, which is considered a
- * different domain.) */
-
-  defaultCorsHeaders = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 10 // Seconds.
 };
