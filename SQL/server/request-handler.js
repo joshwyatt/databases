@@ -5,10 +5,8 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
-
-var chats;
+var db = require("./db.js");
 var url = require("url");
-chats = require("chats/chats.js").chats;
 
 exports.handleRequest = function(request, response) {
 
@@ -19,22 +17,21 @@ exports.handleRequest = function(request, response) {
   /* Without this line, this server wouldn't work. See the note
    * below about CORS. */
   var headers = defaultCorsHeaders;
-
   headers["Content-Type"] = "application/json";
 
   if( request.method === "OPTIONS" ){
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify({}));
   }else if( request.method === "GET" ){
+    console.log("GETTING");
     response.writeHead(statusCode, headers);
-    response.write(JSON.stringify(chats));
+    db.selectAllChats();
+    // response.write(JSON.stringify(chats));
     response.end();
   }else if( request.method === "POST" ){
-    request.on('data', function(chat){
-      chat = JSON.parse(chat);
-      chats.addChat(chat);
-    });
+    console.log("POSTING");
     response.writeHead(statusCode, headers);
+    db.insertRoom();
     response.end(JSON.stringify({}));
   }
 

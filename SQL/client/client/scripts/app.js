@@ -1,7 +1,7 @@
 // YOUR CODE HERE:
 var app = {
 
-  server: 'http://127.0.0.1:3000/basic-server.js',
+  server: 'http://127.0.0.1:8080',
   // server: 'https://api.parse.com/1/classes/chatterbox',
   roomnames: {},
   usernames: {},
